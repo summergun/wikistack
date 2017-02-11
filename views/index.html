@@ -1,0 +1,21 @@
+<html>
+<body>
+    <h1>hello</h1>
+    <form method=POST action='/'>
+    Author<input name = 'author' value='{{author}}'/>
+    Title<input name='title'/>
+    Story<input name='story'/>
+    
+    <button type='submit'>Save</button>
+    </form>
+    <ul>
+    {% for story in stories %}
+    <li>
+        {{story.title}} by {{story.author.name}}
+    </li>
+    {% endfor %}
+    </ul>
+    
+    
+</body>
+</html>
