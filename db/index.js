@@ -1,10 +1,20 @@
 const Sequelize=require('sequelize');
-const db = new Sequelize(process.env.DATABASE_URL);
+const db = new Sequelize(process.env.DATABASE_URL,{
+    logging:false
+});
 
 //create modells
 
 const Author = db.define('author',{
     name:Sequelize.STRING,
+},{
+    classMethods:{
+        deleteAuthor:(author)=>{
+            return Author.destroy(
+                {where:{name:author}}
+            );
+        }
+    }
 });
 
 const Story = db.define('story',{
@@ -32,6 +42,14 @@ const Story = db.define('story',{
                 return Author.create({name: author});
             })
             .then(__author => Story.create({title:title,story:story,authorId:__author.id}));
+        },
+        getStory:(id)=>{
+            return Story.findOne({where:{id:id}});
+        },
+        deleteStory:(id)=>{
+            return Story.destroy(
+                {where:{id:id}}
+            )
         }
     }
 });
@@ -53,7 +71,7 @@ const seed = ()=>{
 
 
 
-Story.belongsTo(Author);
+Story.belongsTo(Author,{onDelete:'CASCADE'});
 Author.hasMany(Story);
 
 let _conn;
