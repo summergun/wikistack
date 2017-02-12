@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+    <body>
+    <div class='well'>
+       <h3> {{story.title}} </h3>
+       <form method=POST action='./{{story.id}}?_method=DELETE'>
+       <button type="submit">Delete</button>
+       </form>
+        <div class="page-body">
+        {{story.story}}
+        </div>
+        </div>
+    </body>
+{% endblock%}
